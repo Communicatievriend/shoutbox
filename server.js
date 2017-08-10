@@ -35,6 +35,23 @@ io.sockets.on('connection', function (socket) {
 });
 
 // CREATE POST SERVER FOR PHP
+app.post('/refresh',function(req,res) {
+
+  var this_pwd = req.body.password;
+  if(this_pwd == '6SHd5KR7jSFrpruM')
+  {
+  	delete req.body.password;
+  	var type = req.body.type;
+  	
+  	if(typeof type !== 'undefined' && type != 0)
+	{
+  		io.emit('refresh', type);
+  		res.end("1");
+  	}
+  }
+  
+});
+
 app.post('/live',function(req,res){
   console.log('Live updated');
   io.emit('refresh', 'live');
