@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 // SET UP SPLASH PAGE
-app.use(express.static(__dirname + '/public'));
 app.get('/',function(req,res){
   	// Send HTML headers and message
 	res.sendFile(__dirname + '/index.html');
