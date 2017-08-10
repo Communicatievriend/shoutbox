@@ -48,5 +48,6 @@ app.post('/shout',function(req,res){
   res.end("1");
 });
 
-http.listen(3000);
-console.log('Server running at port 3000');
+http.listen(3000, function(){
+  console.log('Server started on *:3000');
+});
