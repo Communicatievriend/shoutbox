@@ -1,26 +1,41 @@
-// CREATE BROADCAST SERVER
-var app = require('express')();
+// CREATE SERVER
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+// SETUP BODY PARSER (JSON)
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
+// SET UP SPLASH PAGE
+app.use(express.static(__dirname + '/public'));
+app.get('/',function(req,res){
+  	// Send HTML headers and message
+	res.sendFile(__dirname + '/index.html');
+});
+
+// SETUP SOCKET
 var numUsers = 0;
+var curUsers = 0;
 
 io.sockets.on('connection', function (socket) {
 
 	++numUsers;
+	++curUsers;
 	var usernr = numUsers;
+	var username = 'client #'+usernr;
 	
-	console.log('user #'+usernr+' has connected');
-	socket.on('disconnect',function() {
-		console.log(usernr+' disconnected');
-		--numUsers;
+	console.log(username+' has connected');
+
+	socket.on('disconnect',function(){
+		--curUsers;
+		console.log(username+' disconnected. Clients connected: '+curUsers);
 	});
   
 });
 
 // CREATE POST SERVER FOR PHP
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-
 app.post('/live',function(req,res){
   console.log('Live updated');
   io.emit('refresh', 'live');
