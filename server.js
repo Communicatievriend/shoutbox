@@ -41,11 +41,12 @@ app.post('/refresh',function(req,res) {
   if(this_pwd == '6SHd5KR7jSFrpruM')
   {
   	delete req.body.password;
-  	var type = req.body.type;
+  	var letype = req.body.type;
   	
-  	if(typeof type !== 'undefined' && type != 0)
+  	if(typeof letype !== 'undefined' && letype != 0)
 	{
-  		io.emit('refresh', type);
+  		io.emit('refresh', letype);
+  		console.log('sending refresh to all clients: '+letype);
   		res.end("1");
   	}
   }
