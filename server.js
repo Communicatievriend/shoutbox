@@ -25,7 +25,7 @@ io.sockets.on('connection', function (socket) {
 	var usernr = numUsers;
 	var username = 'client #'+usernr;
 	
-	console.log(username+' has connected');
+	console.log(username+' has connected. Clients connected: '+curUsers);
 
 	socket.on('disconnect',function(){
 		--curUsers;
@@ -34,7 +34,7 @@ io.sockets.on('connection', function (socket) {
   
 });
 
-// CREATE POST SERVER FOR PHP
+// CREATE POST SERVER
 app.post('/refresh',function(req,res) {
 
   var this_pwd = req.body.password;
@@ -46,7 +46,7 @@ app.post('/refresh',function(req,res) {
   	if(typeof letype !== 'undefined' && letype != 0)
 	{
   		io.emit('refresh', letype);
-  		console.log('sending refresh to all clients: '+letype);
+  		console.log('Sending refresh to all clients: '+letype);
   		res.end("1");
   	}
   }
